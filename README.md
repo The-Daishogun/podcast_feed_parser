@@ -1,5 +1,8 @@
 # podcast_feed_parser
 
+a podcast feed parser based on [A Podcaster’s Guide to RSS
+](https://help.apple.com/itc/podcasts_connect/#/itcb54353390) and [RSS 2.0 Specification](https://validator.w3.org/feed/docs/rss2.html#ltguidgtSubelementOfLtitemgt)
+
 a list of fields returned:
 
 - title
