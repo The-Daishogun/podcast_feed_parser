@@ -1,0 +1,96 @@
+Metadata-Version: 2.1
+Name: podcast-feed-parser
+Version: 0.0.1
+Summary: A small package to parse podcast feeds for their info automatically
+Home-page: https://github.com/The-Daishogun/podcast_feed_parser
+Author: Mohammadreza Varasteh
+Author-email: varastehmr@gmail.com
+License: UNKNOWN
+Project-URL: Bug Tracker, https://github.com/The-Daishogun/podcast_feed_parser/issues
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Intended Audience :: Developers
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+# podcast_feed_parser
+
+a podcast feed parser based on [A Podcaster’s Guide to RSS
+](https://help.apple.com/itc/podcasts_connect/#/itcb54353390) and [RSS 2.0 Specification](https://validator.w3.org/feed/docs/rss2.html#ltguidgtSubelementOfLtitemgt)
+
+a list of fields returned:
+
+- title
+- description
+- link
+- language
+- managingEditor
+- webMaster
+- pubDate
+- lastBuildDate
+- copyright
+- generator
+- docs
+- cloud
+- ttl
+- textInput
+- skipHours
+- skipDays
+- itunes:image
+- itunes:explicit
+- itunes:author
+- itunes:title
+- itunes:type
+- itunes:new-feed-url
+- itunes:block
+- itunes:complete
+- itunes:subtitle
+- itunes:summary
+- itunes:keywords
+- image_url
+- image_title
+- image_link
+- image_width
+- image_height
+- image_description
+- categories
+- itunes:category
+- itunes_owner_name
+- itunes_owner_email
+- episodes : [dicts]
+
+episode keys include:
+
+- itunes:image
+- itunes:explicit
+- itunes:title
+- itunes:episode
+- itunes:season
+- itunes:episodeType
+- itunes:block
+- itunes:summary
+- itunes:subtitle
+- content:encoded
+- itunes:duration
+- itunes:keywords
+- title
+- link
+- description
+- author
+- category
+- comments
+- pubDate
+- enclosure_url
+- enclosure_length
+- enclosure_type
+- guid_is_permalink
+- guid
+
+
