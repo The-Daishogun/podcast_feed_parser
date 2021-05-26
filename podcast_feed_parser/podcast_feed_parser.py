@@ -29,7 +29,12 @@ class PodcastFeedParser:
         "comments",
         "pubDate",
     ]
-    rss2_episode_special_tags = ["enclosure", "guid", "itunes:image"]
+    rss2_episode_special_tags = [
+        "enclosure",
+        "guid",
+        "itunes:image",
+        "content:encoded",
+    ]
     itunes_podcast_specific_tags = [
         "itunes:image",
         "itunes:explicit",
@@ -53,7 +58,6 @@ class PodcastFeedParser:
         "itunes:block",
         "itunes:summary",
         "itunes:subtitle",
-        "content:encoded",
         "itunes:duration",
         "itunes:keywords",
     ]
@@ -167,6 +171,11 @@ class PodcastFeedParser:
                     image = item.find("itunes:image")
                     if image is not None:
                         episode.update({"itunes:image": image["href"]})
+
+                if key == "content:encoded":
+                    episode.update(
+                        {"content:encoded": str(item.find("content:encoded"))[17:-18]}
+                    )
             episodes.append(episode)
         return episodes
 
