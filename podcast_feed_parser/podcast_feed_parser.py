@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
+from typing import Union
 
 
 class PodcastFeedParser:
@@ -69,6 +70,14 @@ class PodcastFeedParser:
             self.feed_content, "xml", from_encoding="utf-8"
         )
 
+    def handle_explicit(self, value: str) -> Union[bool, None]:
+        if value is not None:
+            if value == "no":
+                return False
+            elif value == "yes":
+                return True
+        return None
+
     @property
     def is_itunes_compatible(self) -> bool:
         headings = self.feed_soup.find_all("rss")
@@ -91,6 +100,11 @@ class PodcastFeedParser:
         for key, value in podcast_results.items():
             if key == "itunes:image":
                 podcast_results[key] = value["href"]
+            elif key == "itunes:explicit":
+                print(value.text if value is not None else value)
+                podcast_results[key] = self.handle_explicit(
+                    value.text if value is not None else value
+                )
             else:
                 podcast_results[key] = value.text if value is not None else value
         for key in self.special_podcast_tags:
@@ -148,7 +162,12 @@ class PodcastFeedParser:
                 + self.rss2_episode_required_tags
             }
             for key, value in episode.items():
-                episode[key] = value.text if value is not None else value
+                if key == "itunes:explicit":
+                    episode[key] = self.handle_explicit(
+                        value.text if value is not None else value
+                    )
+                else:
+                    episode[key] = value.text if value is not None else value
             for key in self.rss2_episode_special_tags:
                 if key == "guid":
                     guid = item.find("guid")
