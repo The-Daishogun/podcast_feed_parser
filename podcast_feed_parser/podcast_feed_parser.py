@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 from typing import Union
+import hashlib
 
 
 class PodcastFeedParser:
@@ -205,3 +206,7 @@ class PodcastFeedParser:
             return parser_results
         else:
             return "podcast is not itunes compatible"
+
+    def feed_hash(self):
+        hashed = hashlib.md5(self.feed_content)
+        return hashed.hexdigest()
