@@ -4,6 +4,15 @@ from typing import Union
 import hashlib
 
 
+def handle_explicit(value: str) -> Union[bool, None]:
+    if value is not None:
+        if value == "no":
+            return False
+        elif value == "yes":
+            return True
+    return None
+
+
 class PodcastFeedParser:
     rss2_podcast_required_tags = ["title", "description", "link"]
     rss2_podcast_optional_tags = [
@@ -71,14 +80,6 @@ class PodcastFeedParser:
             self.feed_content, "xml", from_encoding="utf-8"
         )
 
-    def handle_explicit(self, value: str) -> Union[bool, None]:
-        if value is not None:
-            if value == "no":
-                return False
-            elif value == "yes":
-                return True
-        return None
-
     @property
     def is_itunes_compatible(self) -> bool:
         headings = self.feed_soup.find_all("rss")
@@ -103,7 +104,7 @@ class PodcastFeedParser:
                 podcast_results[key] = value["href"]
             elif key == "itunes:explicit":
                 print(value.text if value is not None else value)
-                podcast_results[key] = self.handle_explicit(
+                podcast_results[key] = handle_explicit(
                     value.text if value is not None else value
                 )
             else:
@@ -119,8 +120,8 @@ class PodcastFeedParser:
                     "image_height": item.find("height"),
                     "image_description": item.find("description"),
                 }
-                for key, value in image_dic.items():
-                    image_dic[key] = value.text if value is not None else value
+                for key2, value in image_dic.items():
+                    image_dic[key2] = value.text if value is not None else value
                 podcast_results.update(image_dic)
             if key == "category":
                 categories = []
@@ -164,7 +165,7 @@ class PodcastFeedParser:
             }
             for key, value in episode.items():
                 if key == "itunes:explicit":
-                    episode[key] = self.handle_explicit(
+                    episode[key] = handle_explicit(
                         value.text if value is not None else value
                     )
                 else:
@@ -205,7 +206,7 @@ class PodcastFeedParser:
             parser_results.update({"episodes": self.parse_episodes()})
             return parser_results
         else:
-            return "podcast is not itunes compatible"
+            raise Exception("podcast is not itunes compatible")
 
     def feed_hash(self):
         hashed = hashlib.md5(self.feed_content)
